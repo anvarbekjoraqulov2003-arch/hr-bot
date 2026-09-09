@@ -4,9 +4,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-BOT_TOKEN: str = os.getenv("BOT_TOKEN", "8876471739:AAFQ5AVxLNogkEfk3NtMFShWQdTYsEUq9A4").strip()
+BOT_TOKEN: str = os.getenv("BOT_TOKEN", "").strip()
 
-_admin_ids_raw = os.getenv("ADMIN_IDS", "1649296,6651310885").strip()
+_admin_ids_raw = os.getenv("ADMIN_IDS", "").strip()
+
 ADMIN_IDS: List[int] = []
 if _admin_ids_raw:
     for aid in _admin_ids_raw.split(","):
