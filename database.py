@@ -52,6 +52,21 @@ async def add_applicant(data: Dict[str, Any]) -> int:
         elif data.get("programs"):
             programs_skill_str = str(data.get("programs"))
 
+        portfolio_str = data.get("portfolio", "")
+        if not portfolio_str:
+            port_files = data.get("portfolio_files", [])
+            port_links = data.get("portfolio_links", [])
+            if port_files or port_links:
+                parts = []
+                if port_links:
+                    parts.append("Havolalar: " + ", ".join(port_links))
+                if port_files:
+                    fnames = [f.get("file_name", "Fayl") for f in port_files]
+                    parts.append(f"{len(port_files)} ta fayl (" + ", ".join(fnames) + ")")
+                portfolio_str = "; ".join(parts)
+            else:
+                portfolio_str = "Kiritilmadi"
+
         cursor = await db.execute("""
             INSERT INTO applicants (
                 user_id, username, full_name, phone, direction,
@@ -79,7 +94,7 @@ async def add_applicant(data: Dict[str, Any]) -> int:
             data.get("trip_ready", ""),
             data.get("overtime_ready", ""),
             data.get("expected_salary", ""),
-            data.get("portfolio", "Yo'q"),
+            portfolio_str,
             "new"
         ))
         await db.commit()

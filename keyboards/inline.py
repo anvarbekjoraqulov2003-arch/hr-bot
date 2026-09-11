@@ -129,6 +129,15 @@ def get_skip_keyboard() -> InlineKeyboardMarkup:
         [InlineKeyboardButton(text="⏭ O'tkazib yuborish", callback_data="port:skip")]
     ])
 
+def get_portfolio_keyboard(count: int = 0) -> InlineKeyboardMarkup:
+    """Portfolio yuklash bosqichi uchun tugmalar"""
+    buttons = []
+    if count > 0:
+        buttons.append([InlineKeyboardButton(text=f"✅ Tayyor, davom etish ({count} ta)", callback_data="port:done")])
+    else:
+        buttons.append([InlineKeyboardButton(text="⏭ O'tkazib yuborish", callback_data="port:skip")])
+    return InlineKeyboardMarkup(inline_keyboard=buttons)
+
 def get_confirm_keyboard() -> InlineKeyboardMarkup:
     """Tasdiqlash yoki qayta boshlash"""
     return InlineKeyboardMarkup(inline_keyboard=[
